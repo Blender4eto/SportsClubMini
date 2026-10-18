@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SportsClubMini.Data/SportsClubMini.Data.csproj" />
+  <Project Path="SportsClubMini.Web/SportsClubMini.Web.csproj" />
+</Solution>
