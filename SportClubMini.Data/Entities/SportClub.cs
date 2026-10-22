@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SportClubMini.Data.Entities
+namespace SportsClubMini.Data.Entities
 {
     public class SportClub
     {

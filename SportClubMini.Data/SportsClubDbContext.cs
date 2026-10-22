@@ -4,13 +4,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using SportClubMini.Data.Entities;
+using SportsClubMini.Data.Entities;
 
-namespace SportClubMini.Data
+namespace SportsClubMini.Data
 {
-    public class SportClubDbContext : DbContext
+    public class SportsClubDbContext : DbContext
     {
-        public SportClubDbContext(DbContextOptions options) : base(options)
+        public SportsClubDbContext(DbContextOptions options) : base(options)
         {
         }
 
