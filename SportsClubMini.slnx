@@ -1,4 +1,4 @@
 <Solution>
-  <Project Path="SportsClubMini.Data/SportsClubMini.Data.csproj" />
+  <Project Path="SportClubMini.Data/SportClubMini.Data.csproj" Id="7de020e3-4dd7-4d56-be95-08fc84ac96ab" />
   <Project Path="SportsClubMini.Web/SportsClubMini.Web.csproj" />
 </Solution>
