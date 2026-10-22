@@ -9,6 +9,9 @@ namespace SportsClubMini.Data.Entities
 {
     public class SportClub
     {
+        [Key]
+        public Guid ClubId { get; set; }
+
         [Required]
         public string Name { get; set; } = string.Empty;
 

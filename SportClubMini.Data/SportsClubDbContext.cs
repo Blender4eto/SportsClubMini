@@ -10,7 +10,7 @@ namespace SportsClubMini.Data
 {
     public class SportsClubDbContext : DbContext
     {
-        public SportsClubDbContext(DbContextOptions options) : base(options)
+        public SportsClubDbContext(DbContextOptions<SportsClubDbContext> options) : base(options)
         {
         }
 
@@ -21,7 +21,8 @@ namespace SportsClubMini.Data
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<SportClub>(entity =>
-            { 
+            {
+                entity.HasKey(s => s.ClubId);
                 entity.Property(s => s.Name).IsRequired();
                 entity.Property(s => s.Sport).IsRequired();
                 entity.Property(s => s.City).IsRequired();

@@ -1,3 +1,6 @@
+using Microsoft.EntityFrameworkCore;
+using SportsClubMini.Data;
+
 namespace SportsClubMini.Web
 {
     public class Program
@@ -5,6 +8,9 @@ namespace SportsClubMini.Web
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            builder.Services.AddDbContext<SportsClubDbContext>(options => 
+            options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
