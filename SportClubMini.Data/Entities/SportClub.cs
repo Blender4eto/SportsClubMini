@@ -13,16 +13,18 @@ namespace SportsClubMini.Data.Entities
         public Guid ClubId { get; set; }
 
         [Required]
+        [MaxLength(100)]
         public string Name { get; set; } = string.Empty;
 
         [Required]
-        public string Sport {  get; set; } = string.Empty;
-
-        [Required]
+        [MaxLength(100)]
         public string City { get; set; } = string.Empty;
 
         public string Address { get; set; } = string.Empty;
 
         public string Description { get; set; } = string.Empty;
+
+        // Navigation properties
+        public ICollection<Sport> Sports { get; set; } = new List<Sport>();
     }
 }
