@@ -15,17 +15,37 @@ namespace SportsClubMini.Data
         }
 
         public DbSet<SportClub> SportClubs => Set<SportClub>();
+        public DbSet<Sport> Sports => Set<Sport>();
+        public DbSet<Trainer> Trainers => Set<Trainer>();
+        public DbSet<Training> Trainings => Set<Training>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<SportClub>(entity =>
+            modelBuilder.Entity<SportClub>()
+                .HasMany(club => club.Sports)
+                .WithMany()
+                .UsingEntity(join => join.ToTable("SportClubSports"));
+
+            modelBuilder.Entity<Trainer>()
+                .HasOne(trainer => trainer.Club)
+                .WithMany()
+                .HasForeignKey(trainer => trainer.ClubId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Trainer>()
+                .HasOne(trainer => trainer.Sport)
+                .WithMany()
+                .HasForeignKey(trainer => trainer.SportId)
+                .OnDelete(DeleteBehavior.Restrict);
+
+            modelBuilder.Entity<Training>(entity =>
             {
-                entity.HasKey(s => s.ClubId);
-                entity.Property(s => s.Name).IsRequired();
-                entity.Property(s => s.Sport).IsRequired();
-                entity.Property(s => s.City).IsRequired();
+                entity.HasOne(training => training.Trainer)
+                    .WithMany()
+                    .HasForeignKey(training => training.TrainerId)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }
