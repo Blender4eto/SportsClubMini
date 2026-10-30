@@ -22,6 +22,44 @@ namespace SportsClubMini.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.Entity("SportSportClub", b =>
+                {
+                    b.Property<Guid>("SportClubClubId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SportsSportId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("SportClubClubId", "SportsSportId");
+
+                    b.HasIndex("SportsSportId");
+
+                    b.ToTable("SportClubSports", (string)null);
+                });
+
+            modelBuilder.Entity("SportsClubMini.Data.Entities.Sport", b =>
+                {
+                    b.Property<Guid>("SportId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("SportId");
+
+                    b.HasIndex("Name")
+                        .IsUnique();
+
+                    b.ToTable("Sports");
+                });
+
             modelBuilder.Entity("SportsClubMini.Data.Entities.SportClub", b =>
                 {
                     b.Property<Guid>("ClubId")
@@ -34,7 +72,8 @@ namespace SportsClubMini.Data.Migrations
 
                     b.Property<string>("City")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Description")
                         .IsRequired()
@@ -42,15 +81,121 @@ namespace SportsClubMini.Data.Migrations
 
                     b.Property<string>("Name")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Sport")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
 
                     b.HasKey("ClubId");
 
                     b.ToTable("SportClubs");
+                });
+
+            modelBuilder.Entity("SportsClubMini.Data.Entities.Trainer", b =>
+                {
+                    b.Property<Guid>("TrainerId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("ClubId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Phone")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid>("SportId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("TrainerId");
+
+                    b.HasIndex("ClubId");
+
+                    b.HasIndex("SportId");
+
+                    b.ToTable("Trainers");
+                });
+
+            modelBuilder.Entity("SportsClubMini.Data.Entities.Training", b =>
+                {
+                    b.Property<Guid>("TrainingId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("DurationMinutes")
+                        .HasColumnType("int");
+
+                    b.Property<int>("MaxParticipants")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("StartTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
+
+                    b.Property<Guid>("TrainerId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("TrainingId");
+
+                    b.HasIndex("TrainerId");
+
+                    b.ToTable("Trainings");
+                });
+
+            modelBuilder.Entity("SportSportClub", b =>
+                {
+                    b.HasOne("SportsClubMini.Data.Entities.SportClub", null)
+                        .WithMany()
+                        .HasForeignKey("SportClubClubId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SportsClubMini.Data.Entities.Sport", null)
+                        .WithMany()
+                        .HasForeignKey("SportsSportId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SportsClubMini.Data.Entities.Trainer", b =>
+                {
+                    b.HasOne("SportsClubMini.Data.Entities.SportClub", "Club")
+                        .WithMany()
+                        .HasForeignKey("ClubId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SportsClubMini.Data.Entities.Sport", "Sport")
+                        .WithMany()
+                        .HasForeignKey("SportId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Club");
+
+                    b.Navigation("Sport");
+                });
+
+            modelBuilder.Entity("SportsClubMini.Data.Entities.Training", b =>
+                {
+                    b.HasOne("SportsClubMini.Data.Entities.Trainer", "Trainer")
+                        .WithMany()
+                        .HasForeignKey("TrainerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Trainer");
                 });
 #pragma warning restore 612, 618
         }
