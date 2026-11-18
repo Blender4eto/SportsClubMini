@@ -1,5 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using SportsClubMini.Data;
+using SportsClubMini.Services;
+using SportsClubMini.Services.Contracts;
 
 namespace SportsClubMini.Web
 {
@@ -11,6 +13,8 @@ namespace SportsClubMini.Web
 
             builder.Services.AddDbContext<SportsClubDbContext>(options => 
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<ISportClubService, SportClubService>();
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
