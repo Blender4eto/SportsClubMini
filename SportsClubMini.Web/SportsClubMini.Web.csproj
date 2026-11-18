@@ -21,6 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SportClubMini.Data\SportsClubMini.Data.csproj" />
+    <ProjectReference Include="..\SportsClubMini.Services\SportsClubMini.Services.csproj" />
   </ItemGroup>
 
 </Project>
